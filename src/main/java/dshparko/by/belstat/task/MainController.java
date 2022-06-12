@@ -1,6 +1,7 @@
 package dshparko.by.belstat.task;
 
-import dshparko.by.belstat.task.reader.FileReaderClass;
+import dshparko.by.belstat.task.reader.CSVReader;
+import dshparko.by.belstat.task.reader.XMLReader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,14 +31,18 @@ public class MainController {
     void onOpenSCV(ActionEvent event) {
         String description = "CSV";
         List<String> extensions = Collections.singletonList("*.csv");
-        openFile(description, extensions);
+        File selectedFile = openFile(description, extensions);
+        CSVReader fileR = new CSVReader();
+        fileR.fileRead(selectedFile.getPath());
     }
 
     @FXML
-    void onOpenXML(ActionEvent event)  {
+    void onOpenXML(ActionEvent event) {
         String description = "XML";
         List<String> extensions = Collections.singletonList("*.xml");
-        openFile(description, extensions);
+        File selectedFile = openFile(description, extensions);
+        XMLReader fileR = new XMLReader();
+        fileR.fileRead(selectedFile.getPath());
     }
 
     File openFile(String description, List<String> extensions) {
@@ -47,12 +52,12 @@ public class MainController {
         File selectedFile = fileChooser.showOpenDialog(null);
 
         if (selectedFile != null) {
-            FileReaderClass fileR = new FileReaderClass();
-            fileR.fileRead(selectedFile.getPath());
+            return selectedFile;
         } else {
             System.out.println("Error");
+            return openFile(description, extensions);
         }
-        return selectedFile;
+
     }
 
     @FXML
