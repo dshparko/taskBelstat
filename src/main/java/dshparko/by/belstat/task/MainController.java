@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -28,29 +27,25 @@ public class MainController {
     private Button xmlButton;
 
     @FXML
-    void onOpenSCV(ActionEvent event) throws IOException {
+    void onOpenSCV(ActionEvent event) {
         String description = "CSV";
         List<String> extensions = Collections.singletonList("*.csv");
         openFile(description, extensions);
     }
 
     @FXML
-    void onOpenXML(ActionEvent event) throws IOException {
+    void onOpenXML(ActionEvent event)  {
         String description = "XML";
         List<String> extensions = Collections.singletonList("*.xml");
         openFile(description, extensions);
     }
 
-    private StringBuilder lines;
-    private String firstText;
-
-    File openFile(String description, List<String> extensions) throws IOException {
+    File openFile(String description, List<String> extensions) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter(description, extensions));
         File selectedFile = fileChooser.showOpenDialog(null);
 
-        System.out.println(selectedFile);
         if (selectedFile != null) {
             FileReaderClass fileR = new FileReaderClass();
             fileR.fileRead(selectedFile.getPath());

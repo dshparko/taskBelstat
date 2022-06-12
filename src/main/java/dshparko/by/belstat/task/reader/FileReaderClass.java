@@ -8,20 +8,23 @@ public class FileReaderClass implements ReaderInterface {
 
 
     private StringBuilder lines;
-    private String text;
+    private String text="";
 
     @Override
-    public void fileRead(String filename) throws IOException {
+    public void fileRead(String filename) {
 
         lines = new StringBuilder();
-        FileReader fileReader = null;
-        BufferedReader bufferedReader = null;
+        FileReader fileReader;
+        BufferedReader bufferedReader;
         try {
             fileReader = new FileReader(filename);
             String str;
             bufferedReader = new BufferedReader(fileReader);
             while ((str = bufferedReader.readLine()) != null) {
-                lines.append(str.replaceAll(" ", ""));
+
+                    lines.append(str.replaceAll(" ", ""));
+                    lines.append('\n');
+
             }
             fileReader.close();
             bufferedReader.close();
@@ -31,7 +34,7 @@ public class FileReaderClass implements ReaderInterface {
         for (int i = 0; i < lines.length(); i++) {
             text += lines.charAt(i);
         }
-        //  System.out.println(text);
+        System.out.println(text);
         System.out.println("Success!");
     }
 
