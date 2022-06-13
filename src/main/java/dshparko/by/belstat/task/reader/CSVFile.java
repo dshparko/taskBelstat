@@ -2,14 +2,14 @@ package dshparko.by.belstat.task.reader;
 
 public class CSVFile {
 
-    private int tableNumber;
-    private int graphNumber;
-    private int lineCode;
+    private String tableNumber;
+    private String graphNumber;
+    private String lineCode;
     private String fourthCell;
-    private int unitCode;
-    private double value;
+    private String unitCode;
+    private String value;
 
-    public CSVFile(int tableNumber, int graphNumber, int lineCode, String fourthCell, int unitCode, double value) {
+    public CSVFile(String tableNumber, String graphNumber, String lineCode, String fourthCell, String unitCode, String value) {
         this.tableNumber = tableNumber;
         this.graphNumber = graphNumber;
         this.lineCode = lineCode;
@@ -19,27 +19,27 @@ public class CSVFile {
 
     }
 
-    public void setTableNumber(int tableNumber) {
+    public void setTableNumber(String tableNumber) {
         this.tableNumber = tableNumber;
     }
 
-    public int getTableNumber() {
+    public String getTableNumber() {
         return tableNumber;
     }
 
-    public void setGraphNumber(int graphNumber) {
+    public void setGraphNumber(String graphNumber) {
         this.graphNumber = graphNumber;
     }
 
-    public int getGraphNumber() {
+    public String getGraphNumber() {
         return graphNumber;
     }
 
-    public void setLineCode(int lineCode) {
+    public void setLineCode(String lineCode) {
         this.lineCode = lineCode;
     }
 
-    public int getLineCode() {
+    public String getLineCode() {
         return lineCode;
     }
 
@@ -52,19 +52,19 @@ public class CSVFile {
         return fourthCell;
     }
 
-    public void setUnitCode(int unitCode) {
+    public void setUnitCode(String unitCode) {
         this.unitCode = unitCode;
     }
 
-    public int getUnitCode() {
+    public String getUnitCode() {
         return unitCode;
     }
 
-    public void setValue(double value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
-    public double getValue() {
+    public String getValue() {
         return value;
     }
 

@@ -55,7 +55,7 @@ public class MainController {
             return selectedFile;
         } else {
             System.out.println("Error");
-            return openFile(description, extensions);
+            return null;
         }
 
     }
