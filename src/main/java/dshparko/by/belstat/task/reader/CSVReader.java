@@ -60,7 +60,7 @@ public class CSVReader implements ReaderInterface {
                     count = 5;
                 }
                 if (count == 6) {
-                    //    lines.append(str.replaceAll(";;", ";-;"));
+                    lines.append(str.replaceAll(";;", ";-;"));
 
                     lines.append('\n');
                 }
@@ -74,7 +74,7 @@ public class CSVReader implements ReaderInterface {
         for (int i = 0; i < lines.length(); i++) {
             text += lines.charAt(i);
         }
-        System.out.println(text);
+        //   System.out.println(text);
         System.out.println("Success!");
     }
 

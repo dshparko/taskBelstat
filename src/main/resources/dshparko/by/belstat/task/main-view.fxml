@@ -8,7 +8,7 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: snow;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dshparko.by.belstat.task.MainController">
    <children>
       <Text layoutX="55.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="XML-file:" />
-      <Text layoutX="357.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SCV-file:" />
+      <Text layoutX="357.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CSV-file:" />
       <Button layoutX="136.0" layoutY="38.0" mnemonicParsing="false" onAction="#onOpenXML" text="Open" fx:id="xmlButton" />
       <Button fx:id="scvButton" layoutX="464.0" layoutY="38.0" mnemonicParsing="false" onAction="#onOpenSCV" text="Open" />
       <Button disable="true" layoutX="274.0" layoutY="188.0" mnemonicParsing="false" text="Generate" />
