@@ -4,6 +4,7 @@ import dshparko.by.belstat.task.reader.CSVReader;
 import dshparko.by.belstat.task.reader.XMLReader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 
@@ -12,6 +13,8 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static java.lang.System.exit;
 
 public class MainController {
 
@@ -54,10 +57,22 @@ public class MainController {
         if (selectedFile != null) {
             return selectedFile;
         } else {
-            System.out.println("Error");
+            showMessage();
+            exit(0);
             return null;
         }
 
+    }
+
+
+    void showMessage() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
+        alert.setTitle("Information");
+        alert.setHeaderText(null);
+        alert.setContentText("You have not selected any file");
+
+        alert.showAndWait();
     }
 
     @FXML
