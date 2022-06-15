@@ -1,50 +1,55 @@
 package dshparko.by.belstat.task.reader.models;
 
 public class Layout {
-    private String layoutDescription;
-    private String tablesDescription;
-    private String graphsDescription;
-    private String rowsDescription;
-    private String cellsDescription;
-    private String referencesDescription;
+    private String layoutNumber;
+    private String tablesNumber;
+    private String graphsNumber;
+    private String rowsCode;
+    private String rowsName;
+    private String cellsNumber;
+    private String referencesNumber;
     private String uomReferences;
     private String positionsReferences;
-    private String unitDescription;
+    private String unitCode;
 
-    public Layout(String layoutDescription, String tablesDescription, String graphsDescription, String rowsDescription, String cellsDescription, String referencesDescription, String uomReferences, String positionsReferences, String unitDescription) {
-        this.layoutDescription = layoutDescription;
-        this.tablesDescription = tablesDescription;
-        this.graphsDescription = graphsDescription;
-        this.rowsDescription = rowsDescription;
-        this.referencesDescription = referencesDescription;
-        this.cellsDescription = cellsDescription;
+    public Layout(String layoutNumber, String tablesNumber, String graphsNumber, String rowsCode, String cellsNumber, String referencesNumber, String uomReferences, String positionsReferences, String unitCode) {
+        this.layoutNumber = layoutNumber;
+        this.tablesNumber = tablesNumber;
+        this.graphsNumber = graphsNumber;
+        this.rowsCode = rowsCode;
+        this.referencesNumber = referencesNumber;
+        this.cellsNumber = cellsNumber;
         this.uomReferences = uomReferences;
         this.positionsReferences = positionsReferences;
-        this.unitDescription = unitDescription;
+        this.unitCode = unitCode;
     }
 
-    public String getLayoutDescription() {
-        return layoutDescription;
+    public Layout(){
+
     }
 
-    public String getTablesDescription() {
-        return tablesDescription;
+    public String getLayoutNumber() {
+        return layoutNumber;
     }
 
-    public String getGraphsDescription() {
-        return graphsDescription;
+    public String getTablesNumber() {
+        return tablesNumber;
     }
 
-    public String getRowsDescription() {
-        return rowsDescription;
+    public String getGraphsNumber() {
+        return graphsNumber;
     }
 
-    public String getReferencesDescription() {
-        return referencesDescription;
+    public String getRowsNumber() {
+        return rowsCode;
     }
 
-    public String getCellsDescription() {
-        return cellsDescription;
+    public String getReferencesNumber() {
+        return referencesNumber;
+    }
+
+    public String getCellsNumber() {
+        return cellsNumber;
     }
 
     public String getUomReferences() {
@@ -55,8 +60,50 @@ public class Layout {
         return positionsReferences;
     }
 
-    public String getUnitDescription() {
-        return unitDescription;
+    public String getUnitCode() {
+        return unitCode;
+    }
+
+
+
+
+
+
+
+    public void setLayoutNumber(String layoutNumber) {
+        this.layoutNumber= layoutNumber;
+    }
+
+    public void setTablesNumber(String layoutNumber) {
+        this.layoutNumber= tablesNumber;
+    }
+
+    public void setGraphsNumber(String graphsNumber) {
+        this.graphsNumber= graphsNumber;
+    }
+
+    public void setRowsNumber(String rowsCode) {
+        this.rowsCode=rowsCode;
+    }
+
+    public void setReferencesNumber(String referencesNumber) {
+        this.referencesNumber=referencesNumber;
+    }
+
+    public void setCellsNumber(String cellsNumber) {
+        this.cellsNumber=cellsNumber;
+    }
+
+    public void setUomReferences(String uomReferences) {
+        this.uomReferences=uomReferences;
+    }
+
+    public void setPositionsReferences(String positionsReferences) {
+        this.positionsReferences= positionsReferences;
+    }
+
+    public void setUnitCode(String unitCode) {
+        this.unitCode= unitCode;
     }
 
 

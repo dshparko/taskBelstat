@@ -1,40 +1,29 @@
 package dshparko.by.belstat.task.reader;
-import java.io.BufferedReader;
-import java.io.FileReader;
+
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import java.io.File;
 import java.io.IOException;
 
 public class XMLReader implements ReaderInterface {
 
-
-    private StringBuilder lines;
-    private String text="";
-
     @Override
     public void fileRead(String filename) {
 
-        lines = new StringBuilder();
-        FileReader fileReader;
-        BufferedReader bufferedReader;
         try {
-            fileReader = new FileReader(filename);
-            String str;
-            bufferedReader = new BufferedReader(fileReader);
-            while ((str = bufferedReader.readLine()) != null) {
 
-                lines.append(str.replaceAll(" ", ""));
-                lines.append('\n');
+            SAXParserFactory factory = SAXParserFactory.newInstance();
+            SAXParser saxParser = factory.newSAXParser();
 
-            }
-            fileReader.close();
-            bufferedReader.close();
-        } catch (IOException e) {
+            SAXReader handler = new SAXReader();
+            saxParser.parse(new File(filename), handler);
+
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
         }
-        for (int i = 0; i < lines.length(); i++) {
-            text += lines.charAt(i);
-        }
-        System.out.println(text);
-        System.out.println("Success!");
     }
 
 

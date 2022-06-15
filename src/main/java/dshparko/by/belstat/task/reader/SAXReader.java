@@ -2,46 +2,52 @@ package dshparko.by.belstat.task.reader;
 
 import dshparko.by.belstat.task.reader.models.Layout;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
-import java.io.IOException;
-import java.util.ArrayList;
 
-public class SAXReader {
-    private static ArrayList<Layout> layout = new ArrayList<>();
+public class SAXReader extends DefaultHandler {
 
-    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
-        SAXParserFactory factory = SAXParserFactory.newInstance();
-        SAXParser parser = factory.newSAXParser();
+    Layout layout;
+
+    @Override
+    public void startDocument() {
+        System.out.println("Start Document");
     }
 
-    private static class XMLHandler extends DefaultHandler {
+    @Override
+    public void endDocument() {
+        System.out.println("End Document");
+    }
 
-        @Override
-        //change tags
-        public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-            if (qName.equals("TEMPLATE_ROOT/TEMPLATE_GSN/DESCRIPTION")) {
-                String layoutDescription = attributes.getValue("TEMPLATE_ROOT/TEMPLATE_GSN/PARTS/TABLES");
-                String tablesDescription = attributes.getValue("///");
-                String graphsDescription = attributes.getValue("//");
-                String rowsDescription = attributes.getValue("//");
-                String cellsDescription = attributes.getValue("///");
-                String referencesDescription = attributes.getValue("//");
-                String uomReferences = attributes.getValue("REFERENCE_POSITIONS");
-                String positionsReferences = attributes.getValue("REFERENCE_UOM");
-                String unitDescription = attributes.getValue("TEMPLATE_ROOT/TEMPLATE_GSN/UNIT_OF_MEASURE");
-                layout.add(new Layout(layoutDescription, tablesDescription, graphsDescription, rowsDescription, cellsDescription, referencesDescription, uomReferences, positionsReferences, unitDescription));
-            }
+    @Override
+    public void startElement(
+            String uri,
+            String localName,
+            String qName,
+            Attributes attributes) {
+        layout = new Layout();
+        System.out.printf("Start Element : %s%n", qName);
+
+        if (qName.equals("row")) {
+            String id = attributes.getValue("NUMBER_DTABLE");
+            String currency = attributes.getValue("NUMBER_DGP");
+            String currenc = attributes.getValue("CODE_DROW");
+            System.out.printf("NUMBER_DTABLE: %s%n", id);
+            System.out.printf("NUMBER_DGP :%s%n", currency);
+            System.out.printf("CODE_DROW :%s%n", currenc);
         }
 
-        @Override
-        public void endElement(String uri, String localName, String qName) throws SAXException {
-            // Тут будет логика реакции на конец элемента
-        }
+
 
     }
+
+    @Override
+    public void endElement(String uri,
+                           String localName,
+                           String qName) {
+
+        System.out.printf("End Element : %s%n", qName);
+
+    }
+
 }
