@@ -43,7 +43,9 @@ public class Layout {
     public String getRowsNumber() {
         return rowsCode;
     }
-
+    public String getRowsName() {
+        return rowsName;
+    }
     public String getReferencesNumber() {
         return referencesNumber;
     }
@@ -74,7 +76,7 @@ public class Layout {
         this.layoutNumber= layoutNumber;
     }
 
-    public void setTablesNumber(String layoutNumber) {
+    public void setTablesNumber(String tablesNumber) {
         this.layoutNumber= tablesNumber;
     }
 
@@ -85,7 +87,9 @@ public class Layout {
     public void setRowsNumber(String rowsCode) {
         this.rowsCode=rowsCode;
     }
-
+    public void setRowsName(String rowsName) {
+        this.rowsName=rowsName;
+    }
     public void setReferencesNumber(String referencesNumber) {
         this.referencesNumber=referencesNumber;
     }

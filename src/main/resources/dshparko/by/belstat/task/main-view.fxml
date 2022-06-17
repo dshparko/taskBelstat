@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
-
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: snow;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dshparko.by.belstat.task.MainController">
    <children>
@@ -11,6 +12,16 @@
       <Text layoutX="357.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CSV-file:" />
       <Button layoutX="136.0" layoutY="38.0" mnemonicParsing="false" onAction="#onOpenXML" text="Open" fx:id="xmlButton" />
       <Button fx:id="scvButton" layoutX="464.0" layoutY="38.0" mnemonicParsing="false" onAction="#onOpenSCV" text="Open" />
-      <Button disable="true" layoutX="274.0" layoutY="188.0" mnemonicParsing="false" text="Generate" />
+      <Button fx:id="generateButton" layoutX="274.0" layoutY="188.0" mnemonicParsing="false" onAction="#onGenerateButton" text="Generate" />
+      <ImageView fitHeight="46.0" fitWidth="45.0" layoutX="196.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false" fx:id="xmlFile">
+         <image>
+            <Image url="@file.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="csvFile" fitHeight="46.0" fitWidth="45.0" layoutX="526.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@file.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

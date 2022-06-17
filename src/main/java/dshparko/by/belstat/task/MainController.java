@@ -1,15 +1,18 @@
 package dshparko.by.belstat.task;
 
+import dshparko.by.belstat.task.reader.CSVFile;
 import dshparko.by.belstat.task.reader.CSVReader;
 import dshparko.by.belstat.task.reader.XMLReader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -22,6 +25,15 @@ public class MainController {
     private ResourceBundle resources;
 
     @FXML
+    private Button generateButton;
+
+    @FXML
+    private ImageView xmlFile;
+
+    @FXML
+    private ImageView csvFile;
+
+    @FXML
     private URL location;
 
     @FXML
@@ -30,6 +42,18 @@ public class MainController {
     @FXML
     private Button xmlButton;
 
+
+    @FXML
+    void onGenerateButton(ActionEvent event) {
+        if(csvFile.isVisible()&&xmlFile.isVisible()){
+            GenerateReport generateReport = new GenerateReport();
+            CSVReader csvReader = new CSVReader();
+            ArrayList<CSVFile> list = csvReader.getCSVList();
+            generateReport.generateReport(list,list);
+        }
+    }
+
+
     @FXML
     void onOpenSCV(ActionEvent event) {
         String description = "CSV";
@@ -37,6 +61,7 @@ public class MainController {
         File selectedFile = openFile(description, extensions);
         CSVReader fileR = new CSVReader();
         fileR.fileRead(selectedFile.getPath());
+        csvFile.setVisible(true);
     }
 
     @FXML
@@ -46,6 +71,7 @@ public class MainController {
         File selectedFile = openFile(description, extensions);
         XMLReader fileR = new XMLReader();
         fileR.fileRead(selectedFile.getPath());
+        xmlFile.setVisible(true);
     }
 
     File openFile(String description, List<String> extensions) {
@@ -77,7 +103,6 @@ public class MainController {
 
     @FXML
     void initialize() {
-
     }
 
 }

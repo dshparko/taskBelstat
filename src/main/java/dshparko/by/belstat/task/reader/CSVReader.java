@@ -8,6 +8,12 @@ import java.util.ArrayList;
 public class CSVReader implements ReaderInterface {
 
 
+    private ArrayList<CSVFile> CSVList = new ArrayList<>();
+
+    public ArrayList<CSVFile> getCSVList(){
+        return this.CSVList;
+    }
+
     public CSVFile initialize(String str) {
         CSVFile csvFile = null;
         String[] count = str.split(";");
@@ -20,7 +26,6 @@ public class CSVReader implements ReaderInterface {
 
     @Override
     public void fileRead(String filename) {
-        ArrayList<CSVFile> CSVList = new ArrayList<>();
         FileReader fileReader;
         BufferedReader bufferedReader;
         try {
@@ -33,7 +38,6 @@ public class CSVReader implements ReaderInterface {
                 if (CSVLine != null)
                     CSVList.add(CSVLine);
             }
-            System.out.println("Success!");
             fileReader.close();
             bufferedReader.close();
         } catch (IOException e) {
