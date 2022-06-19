@@ -1,6 +1,6 @@
 package dshparko.by.belstat.task;
 
-import dshparko.by.belstat.task.reader.CSVFile;
+import dshparko.by.belstat.task.reader.csv.CSVFile;
 
 import java.util.ArrayList;
 

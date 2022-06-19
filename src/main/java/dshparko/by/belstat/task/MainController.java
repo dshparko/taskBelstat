@@ -1,8 +1,8 @@
 package dshparko.by.belstat.task;
 
-import dshparko.by.belstat.task.reader.CSVFile;
-import dshparko.by.belstat.task.reader.CSVReader;
-import dshparko.by.belstat.task.reader.XMLReader;
+import dshparko.by.belstat.task.reader.csv.CSVFile;
+import dshparko.by.belstat.task.reader.csv.CSVReader;
+import dshparko.by.belstat.task.reader.xml.XMLReader;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
