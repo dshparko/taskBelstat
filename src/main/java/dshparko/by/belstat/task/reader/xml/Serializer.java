@@ -8,5 +8,5 @@ public interface Serializer {
 
     <T> String serialize(T Value);
 
-    <T> T deserialize(InputStream inputStream, Class<T> valueType) throws IOException;
+    <T> T deserialize(String filePath, Class<T> valueType) throws IOException;
 }

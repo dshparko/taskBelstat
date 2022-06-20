@@ -3,6 +3,7 @@ package dshparko.by.belstat.task;
 import dshparko.by.belstat.task.reader.csv.CSVFile;
 import dshparko.by.belstat.task.reader.csv.CSVReader;
 import dshparko.by.belstat.task.reader.xml.XMLReader;
+import dshparko.by.belstat.task.reader.xml.XmlSerializer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -11,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,11 +67,11 @@ public class MainController {
     }
 
     @FXML
-    void onOpenXML(ActionEvent event) {
+    void onOpenXML(ActionEvent event) throws IOException {
         String description = "XML";
         List<String> extensions = Collections.singletonList("*.xml");
         File selectedFile = openFile(description, extensions);
-        XMLReader fileR = new XMLReader();
+        XmlSerializer fileR = new XmlSerializer();
         fileR.fileRead(selectedFile.getPath());
         xmlFile.setVisible(true);
     }

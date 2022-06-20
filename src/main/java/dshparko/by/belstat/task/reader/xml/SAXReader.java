@@ -1,7 +1,5 @@
 package dshparko.by.belstat.task.reader.xml;
 
-import dshparko.by.belstat.task.reader.models.Layout;
-import dshparko.by.belstat.task.reader.models.Table;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -11,7 +9,7 @@ import java.util.Map;
 
 public class SAXReader extends DefaultHandler {
 
-    Layout layout;
+
 
     private static final String TABLES = "TABLES";
     private static final String GRAPH_PROGRAPH = "GRAPH_PROGRAPH";
@@ -34,7 +32,7 @@ public class SAXReader extends DefaultHandler {
         System.out.println("End Document");
     }
 
-    Table t = new Table();
+
 
 
     @Override
@@ -43,7 +41,6 @@ public class SAXReader extends DefaultHandler {
             String localName,
             String qName,
             Attributes attributes) {
-        layout = new Layout();
         switch (qName) {
             case TABLES -> isTable = true;
             case GRAPH_PROGRAPH -> isGraph = true;
