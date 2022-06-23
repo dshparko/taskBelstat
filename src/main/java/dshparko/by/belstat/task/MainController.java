@@ -1,7 +1,9 @@
 package dshparko.by.belstat.task;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dshparko.by.belstat.task.reader.csv.CSVFile;
 import dshparko.by.belstat.task.reader.csv.CSVReader;
+import dshparko.by.belstat.task.reader.xml.SAXReader;
 import dshparko.by.belstat.task.reader.xml.XMLReader;
 import dshparko.by.belstat.task.reader.xml.XmlSerializer;
 import javafx.event.ActionEvent;
@@ -47,11 +49,11 @@ public class MainController {
 
     @FXML
     void onGenerateButton(ActionEvent event) {
-        if(csvFile.isVisible()&&xmlFile.isVisible()){
+        if (csvFile.isVisible() && xmlFile.isVisible()) {
             GenerateReport generateReport = new GenerateReport();
             CSVReader csvReader = new CSVReader();
             ArrayList<CSVFile> list = csvReader.getCSVList();
-            generateReport.generateReport(list,list);
+            generateReport.generateReport(list, list);
         }
     }
 
@@ -64,6 +66,9 @@ public class MainController {
         CSVReader fileR = new CSVReader();
         fileR.fileRead(selectedFile.getPath());
         csvFile.setVisible(true);
+        if (csvFile.isVisible() && xmlFile.isVisible()) {
+            generateButton.setDisable(false);
+        }
     }
 
     @FXML
@@ -71,9 +76,12 @@ public class MainController {
         String description = "XML";
         List<String> extensions = Collections.singletonList("*.xml");
         File selectedFile = openFile(description, extensions);
-        XmlSerializer fileR = new XmlSerializer();
+       XMLReader fileR = new XMLReader();
         fileR.fileRead(selectedFile.getPath());
         xmlFile.setVisible(true);
+        if (csvFile.isVisible() && xmlFile.isVisible()) {
+            generateButton.setDisable(false);
+        }
     }
 
     File openFile(String description, List<String> extensions) {
@@ -105,6 +113,9 @@ public class MainController {
 
     @FXML
     void initialize() {
+        if (csvFile.isVisible() && xmlFile.isVisible()) {
+            generateButton.setDisable(false);
+        }
     }
 
 }

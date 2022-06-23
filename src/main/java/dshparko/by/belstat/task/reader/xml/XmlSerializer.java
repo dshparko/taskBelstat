@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import dshparko.by.belstat.task.reader.Reader;
-import dshparko.by.belstat.task.reader.xml.models.ListWrapper;
+import dshparko.by.belstat.task.reader.xml.models.TemplateRoot;
 
 import java.io.*;
 
@@ -33,9 +33,8 @@ public class XmlSerializer implements Serializer, Reader {
     public void fileRead(String filename) throws IOException {
         File file = new File(filename);
         InputStream is= new FileInputStream(file);
-        System.out.println(inputStreamToString(is));
-
-
+     //   System.out.println(inputStreamToString(is));
+        //deserialize(inputStreamToString(is), TemplateRoot.class);
     }
 
     private String inputStreamToString(InputStream is) throws IOException {

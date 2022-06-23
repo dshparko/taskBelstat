@@ -1,14 +1,15 @@
 package dshparko.by.belstat.task.reader.xml;
 
+import dshparko.by.belstat.task.reader.xml.models.TemplateGraph;
+import dshparko.by.belstat.task.reader.xml.models.TemplateRow;
+import dshparko.by.belstat.task.reader.xml.models.TemplateTable;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 
 public class SAXReader extends DefaultHandler {
-
 
 
     private static final String TABLES = "TABLES";
@@ -32,8 +33,14 @@ public class SAXReader extends DefaultHandler {
         System.out.println("End Document");
     }
 
+    TemplateTable t = new TemplateTable();
 
+    TemplateGraph g = new TemplateGraph();
+    TemplateRow r = new TemplateRow();
 
+    ArrayList<TemplateTable> table = new ArrayList<>();
+    ArrayList<TemplateRow> rows = new ArrayList<>();
+    ArrayList<TemplateGraph> graphListWrapper = new ArrayList<>();
 
     @Override
     public void startElement(
@@ -52,24 +59,26 @@ public class SAXReader extends DefaultHandler {
         if (isTable) {
             if (qName.equals("row")) {
                 if (!isGraph && !isRows && !isCell) {
-                    id = attributes.getValue("ID_DTABLE");
-                    number = attributes.getValue("NUMBER_DTABLE");
-                    System.out.printf("NUMBER_DTABLE: %s%n", id, number);
+                    t.setId(Integer.parseInt(attributes.getValue("ID_DTABLE")));
+                    t.setNumber(Integer.parseInt(attributes.getValue("NUMBER_DTABLE")));
+                    t.setName(attributes.getValue("NAME_DPART"));
+
                 }
                 if (isGraph) {
 
+                    ArrayList<TemplateGraph> graphListWrapper = new ArrayList<>();
+                    g.setId(Integer.parseInt(attributes.getValue("ID_DGP")));
+                    g.setNumber(Integer.parseInt(attributes.getValue("ID_DGP")));
 
-                    currency = attributes.getValue("NUMBER_DGP");
-                    curren = attributes.getValue("ID_DGP");
-
-                    System.out.printf("NUMBER_DGP :%s%n", currency, curren);
                 }
                 if (isRows) {
-                    currenc = attributes.getValue("CODE_DROW");
-                    curr = attributes.getValue("ID_DROW");
+                    r.setId(Integer.parseInt(attributes.getValue("ID_DROW")));
+                    r.setCode((attributes.getValue("CODE_DROW")));
 
-                    System.out.printf("CODE_DROW :%s%n", currenc, curr);
                 }
+                rows.add(r);
+                graphListWrapper.add(g);
+                table.add(t);
             }
         }
 
@@ -85,6 +94,10 @@ public class SAXReader extends DefaultHandler {
             case ROW_IN_TABLE -> isRows = false;
             case DEATH_GRAPH_CELL -> isCell = false;
         }
+        // for (TemplateTable templateTable : table) System.out.println(templateTable.getId());
+
+        // for (TemplateGraph templateGraph : graphListWrapper) System.out.println(templateGraph.getNumber());
+        // for (TemplateRow templateRow : rows) System.out.println(templateRow.getCode());
         System.out.printf("End Element : %s%n", qName);
 
     }

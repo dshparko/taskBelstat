@@ -12,7 +12,7 @@
       <Text layoutX="357.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CSV-file:" />
       <Button layoutX="136.0" layoutY="38.0" mnemonicParsing="false" onAction="#onOpenXML" text="Open" fx:id="xmlButton" />
       <Button fx:id="scvButton" layoutX="464.0" layoutY="38.0" mnemonicParsing="false" onAction="#onOpenSCV" text="Open" />
-      <Button fx:id="generateButton" layoutX="274.0" layoutY="188.0" mnemonicParsing="false" onAction="#onGenerateButton" text="Generate" />
+      <Button fx:id="generateButton" disable="true" layoutX="274.0" layoutY="188.0" mnemonicParsing="false" onAction="#onGenerateButton" text="Generate" />
       <ImageView fitHeight="46.0" fitWidth="45.0" layoutX="196.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" visible="false" fx:id="xmlFile">
          <image>
             <Image url="@file.png" />
