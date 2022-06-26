@@ -13,8 +13,10 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Random;
 
 public class XMLWriter {
+    public static Random random = new Random();
 
     public static void main(String[] args) {
 
@@ -29,7 +31,7 @@ public class XMLWriter {
 
             String prettyPrintXML = formatXML(xml);
 
-             System.out.println(prettyPrintXML);
+            System.out.println(prettyPrintXML);
 
             Files.writeString(Paths.get("C:\\Users\\Lenovo\\OneDrive - bsuir.by\\Рабочий стол\\task\\src\\main\\java\\dshparko\\by\\belstat\\task\\writer\\test.xml"),
                     prettyPrintXML, StandardCharsets.UTF_8);
@@ -55,13 +57,45 @@ public class XMLWriter {
 
         writer.writeStartElement("DESCRIPTION");
 
-        writer.writeAttribute("id", "1001");
+        writer.writeAttribute("APP_VER", "22.1.4.14.ARM");
+        writer.writeAttribute("DB_VER", "5");
+
+        writer.writeAttribute("COMMENT", String.valueOf(random.nextInt(50000)));
+        writer.writeAttribute("ID_REF", "CHANGE");//CHANGE!
+        writer.writeAttribute("ID_FT", "20214");//CHANGE!
+        writer.writeAttribute("ID_P", "12639");//CHANGE!
+        writer.writeAttribute("NAME_ESN", "");
+
+        writer.writeStartElement("USERS");
+        writer.writeAttribute("NAME", "Брокар А.Л.");//CHANGE!
+        writer.writeAttribute("DEPARTMENT", "бухгалтерия");//CHANGE!
+        writer.writeAttribute("PHONE", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
+        writer.writeAttribute("EMAIL", "zaitseva@yurkas.by");//CHANGE!
         writer.writeEndElement();
 
 
-     //   writer.writeComment("");
+
+
+
+        //   writer.writeComment("");
 
         writer.writeEndElement();
+
+
+        writer.writeStartElement("ROW_REPORT");
+        writer.writeAttribute("NAME", "Брокар А.Л.");//CHANGE!
+        writer.writeAttribute("DEPARTMENT", "бухгалтерия");//CHANGE!
+        writer.writeAttribute("PHONE", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
+        writer.writeAttribute("EMAIL", "zaitseva@yurkas.by");//CHANGE!
+        writer.writeEndElement();
+
+        writer.writeStartElement("GRAPH_CELL");
+        writer.writeAttribute("NAME", "Брокар А.Л.");//CHANGE!
+        writer.writeAttribute("DEPARTMENT", "бухгалтерия");//CHANGE!
+        writer.writeAttribute("PHONE", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
+        writer.writeAttribute("EMAIL", "zaitseva@yurkas.by");//CHANGE!
+        writer.writeEndElement();
+
         writer.writeEndElement();
         writer.writeEndDocument();
 
@@ -121,7 +155,7 @@ public class XMLWriter {
 
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
-       // transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
+        // transformer.setOutputProperty(OutputKeys.STANDALONE, "yes");
 
         StreamSource source = new StreamSource(new StringReader(xml));
         StringWriter output = new StringWriter();

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><REPORT_ROOT>
     <REPORT>
-        <DESCRIPTION id="1001"/>
+        <DESCRIPTION APP_VER="22.1.4.14.ARM" DB_VER="5" COMMENT="547" ID_REF="CHANGE" ID_FT="20214" ID_P="12639" NAME_ESN="">
+            <USERS NAME="Брокар А.Л." DEPARTMENT="бухгалтерия" PHONE="8 029 113-17-89; 8 017 511-99-55 (вн.1163)" EMAIL="zaitseva@yurkas.by"/>
+        </DESCRIPTION>
+        <ROW_REPORT NAME="Брокар А.Л." DEPARTMENT="бухгалтерия" PHONE="8 029 113-17-89; 8 017 511-99-55 (вн.1163)" EMAIL="zaitseva@yurkas.by"/>
+        <GRAPH_CELL NAME="Брокар А.Л." DEPARTMENT="бухгалтерия" PHONE="8 029 113-17-89; 8 017 511-99-55 (вн.1163)" EMAIL="zaitseva@yurkas.by"/>
     </REPORT>
 </REPORT_ROOT>
