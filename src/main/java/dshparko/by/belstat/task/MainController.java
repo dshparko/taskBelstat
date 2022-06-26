@@ -1,11 +1,9 @@
 package dshparko.by.belstat.task;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dshparko.by.belstat.task.reader.csv.CSVFile;
 import dshparko.by.belstat.task.reader.csv.CSVReader;
-import dshparko.by.belstat.task.reader.xml.SAXReader;
 import dshparko.by.belstat.task.reader.xml.XMLReader;
-import dshparko.by.belstat.task.reader.xml.XmlSerializer;
+import dshparko.by.belstat.task.reader.xml.models.Template;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -46,14 +44,17 @@ public class MainController {
     @FXML
     private Button xmlButton;
 
-
+    CSVReader csvReader;
+    XMLReader xmlReader;
+    Template temp;
     @FXML
     void onGenerateButton(ActionEvent event) {
         if (csvFile.isVisible() && xmlFile.isVisible()) {
             GenerateReport generateReport = new GenerateReport();
-            CSVReader csvReader = new CSVReader();
+
             ArrayList<CSVFile> list = csvReader.getCSVList();
-            generateReport.generateReport(list, list);
+
+            generateReport.generateReport(list, temp);
         }
     }
 
@@ -63,8 +64,8 @@ public class MainController {
         String description = "CSV";
         List<String> extensions = Collections.singletonList("*.csv");
         File selectedFile = openFile(description, extensions);
-        CSVReader fileR = new CSVReader();
-        fileR.fileRead(selectedFile.getPath());
+        csvReader = new CSVReader();
+        csvReader.fileRead(selectedFile.getPath());
         csvFile.setVisible(true);
         if (csvFile.isVisible() && xmlFile.isVisible()) {
             generateButton.setDisable(false);
@@ -76,9 +77,10 @@ public class MainController {
         String description = "XML";
         List<String> extensions = Collections.singletonList("*.xml");
         File selectedFile = openFile(description, extensions);
-       XMLReader fileR = new XMLReader();
-        fileR.fileRead(selectedFile.getPath());
+        xmlReader = new XMLReader();
+        xmlReader.fileRead(selectedFile.getPath());
         xmlFile.setVisible(true);
+        temp = xmlReader.getXMLTemplate();
         if (csvFile.isVisible() && xmlFile.isVisible()) {
             generateButton.setDisable(false);
         }
@@ -113,9 +115,7 @@ public class MainController {
 
     @FXML
     void initialize() {
-        if (csvFile.isVisible() && xmlFile.isVisible()) {
-            generateButton.setDisable(false);
-        }
+
     }
 
 }

@@ -1,8 +1,6 @@
 package dshparko.by.belstat.task.reader.xml;
 
-import dshparko.by.belstat.task.reader.xml.models.TemplateGraph;
-import dshparko.by.belstat.task.reader.xml.models.TemplateRow;
-import dshparko.by.belstat.task.reader.xml.models.TemplateTable;
+import dshparko.by.belstat.task.reader.xml.models.*;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -20,27 +18,55 @@ public class SAXReader extends DefaultHandler {
     private boolean isRows = false;
     private boolean isGraph = false;
     private boolean isCell = false;
-    String id, currency, currenc, number, curren, curr;
 
+    private ArrayList<TemplateTable> table;
+
+    TemplateTable t ;
+    TemplateGraph g ;
+    TemplateRow r ;
+
+
+    TemplatePart templatePart ;
+
+    ArrayList<TemplateRow> rows;
+    ArrayList<TemplateGraph> graphListWrapper;
+    ArrayList<TemplatePart> parts ;
+
+    private Template template ;
+
+
+    public Template getXMLTemplate() {
+        return this.template;
+    }
 
     @Override
     public void startDocument() {
+        table = new ArrayList<>();
+        t = new TemplateTable();
+        g = new TemplateGraph();
+        r = new TemplateRow();
+
+
+        templatePart = new TemplatePart();
+
+        rows = new ArrayList<>();
+        graphListWrapper = new ArrayList<>();
+        parts = new ArrayList<>();
+
+        template = new Template();
         System.out.println("Start Document");
     }
 
     @Override
     public void endDocument() {
+
+        for (int i = 0; i < table.size(); i++) {
+            System.out.println(table.get(i).getNumber());
+        }
+        template.setParts(parts);
         System.out.println("End Document");
     }
 
-    TemplateTable t = new TemplateTable();
-
-    TemplateGraph g = new TemplateGraph();
-    TemplateRow r = new TemplateRow();
-
-    ArrayList<TemplateTable> table = new ArrayList<>();
-    ArrayList<TemplateRow> rows = new ArrayList<>();
-    ArrayList<TemplateGraph> graphListWrapper = new ArrayList<>();
 
     @Override
     public void startElement(
@@ -54,51 +80,70 @@ public class SAXReader extends DefaultHandler {
             case ROW_IN_TABLE -> isRows = true;
             case DEATH_GRAPH_CELL -> isCell = true;
         }
-        System.out.printf("Start Element : %s%n", qName);
+        //   System.out.printf("Start Element : %s%n", qName);
 
         if (isTable) {
             if (qName.equals("row")) {
                 if (!isGraph && !isRows && !isCell) {
+                    t = new TemplateTable();
                     t.setId(Integer.parseInt(attributes.getValue("ID_DTABLE")));
                     t.setNumber(Integer.parseInt(attributes.getValue("NUMBER_DTABLE")));
                     t.setName(attributes.getValue("NAME_DPART"));
 
-                }
-                if (isGraph) {
-
-                    ArrayList<TemplateGraph> graphListWrapper = new ArrayList<>();
+                } else if (isGraph) {
+                    g = new TemplateGraph();
                     g.setId(Integer.parseInt(attributes.getValue("ID_DGP")));
                     g.setNumber(Integer.parseInt(attributes.getValue("ID_DGP")));
 
-                }
-                if (isRows) {
+                } else if (isRows) {
+                    r = new TemplateRow();
                     r.setId(Integer.parseInt(attributes.getValue("ID_DROW")));
                     r.setCode((attributes.getValue("CODE_DROW")));
 
                 }
                 rows.add(r);
                 graphListWrapper.add(g);
-                table.add(t);
+
+                t.setRows(rows);
+                t.setGraphs(graphListWrapper);
+
+                if (!table.contains(t))
+                    table.add(t);
+
+
+                templatePart.setTables(table);
+
+                parts.add(templatePart);
+
             }
         }
-
     }
 
     @Override
     public void endElement(String uri,
                            String localName,
                            String qName) {
+
         switch (qName) {
             case TABLES -> isTable = false;
             case GRAPH_PROGRAPH -> isGraph = false;
             case ROW_IN_TABLE -> isRows = false;
             case DEATH_GRAPH_CELL -> isCell = false;
         }
-        // for (TemplateTable templateTable : table) System.out.println(templateTable.getId());
+        //  for (TemplateTable templateTable : table) {System.out.println(templateTable.getNumber());
+        //System.out.println();}
 
         // for (TemplateGraph templateGraph : graphListWrapper) System.out.println(templateGraph.getNumber());
         // for (TemplateRow templateRow : rows) System.out.println(templateRow.getCode());
-        System.out.printf("End Element : %s%n", qName);
+        // for (TemplateTable templateTable : table) System.out.println(templateTable.getGraphs());
+/*
+      for (TemplateTable templateTable : table) {
+            ArrayList<TemplateRow> tt = templateTable.getRows();
+            System.out.println(tt.size());
+        }
+  */
+        //   System.out.printf("End Element : %s%n", qName);
+
 
     }
 
