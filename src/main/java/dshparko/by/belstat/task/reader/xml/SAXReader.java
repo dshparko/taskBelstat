@@ -21,19 +21,24 @@ public class SAXReader extends DefaultHandler {
 
     private ArrayList<TemplateTable> table;
 
-    TemplateTable t ;
-    TemplateGraph g ;
-    TemplateRow r ;
+    TemplateTable t;
+    TemplateGraph g;
+    TemplateRow r;
 
 
-    TemplatePart templatePart ;
+    TemplateDescription description;
 
+    TemplatePart templatePart;
+    ArrayList<Period> periods;
     ArrayList<TemplateRow> rows;
     ArrayList<TemplateGraph> graphListWrapper;
-    ArrayList<TemplatePart> parts ;
+    ArrayList<TemplatePart> parts;
 
-    private Template template ;
+    private Template template;
 
+    Period period;
+
+    PeriodType periodType;
 
     public Template getXMLTemplate() {
         return this.template;
@@ -41,6 +46,10 @@ public class SAXReader extends DefaultHandler {
 
     @Override
     public void startDocument() {
+        periodType = new PeriodType();
+        period = new Period();
+        periods = new ArrayList<>();
+        description = new TemplateDescription();
         table = new ArrayList<>();
         t = new TemplateTable();
         g = new TemplateGraph();
@@ -63,6 +72,9 @@ public class SAXReader extends DefaultHandler {
         for (int i = 0; i < table.size(); i++) {
             System.out.println(table.get(i).getNumber());
         }
+        periodType.setPeriods(periods);
+        template.setPeriodType(periodType);
+        template.setDescription(description);
         template.setParts(parts);
         System.out.println("End Document");
     }
@@ -81,7 +93,20 @@ public class SAXReader extends DefaultHandler {
             case DEATH_GRAPH_CELL -> isCell = true;
         }
         //   System.out.printf("Start Element : %s%n", qName);
+        if (qName.equals("DESCRIPTION")) {
+            description.setTemplateId(Integer.parseInt(attributes.getValue("ID_FT")));
 
+            description.setVersionNumber(Integer.parseInt(attributes.getValue("VER_NUMBER")));
+
+        }
+
+        if (qName.equals("PERIOD")) {
+            period.setId(Integer.parseInt(attributes.getValue("ID_P")));
+            periods.add(period);
+        }
+        if (qName.equals("row")) {
+            Integer.parseInt(attributes.getValue("ID_REF"));
+        }
         if (isTable) {
             if (qName.equals("row")) {
                 if (!isGraph && !isRows && !isCell) {
@@ -101,6 +126,8 @@ public class SAXReader extends DefaultHandler {
                     r.setCode((attributes.getValue("CODE_DROW")));
 
                 }
+
+
                 rows.add(r);
                 graphListWrapper.add(g);
 
