@@ -110,8 +110,12 @@ public class SAXReader extends DefaultHandler {
             period.setId(Integer.parseInt(attributes.getValue("ID_P")));
             periods.add(period);
         }
-        if (qName.equals("row")&& !(attributes.getValue("ID_REF") ==null)) {
+        if (qName.equals("row")&& (!(attributes.getValue("ID_REF") ==null)&&!(attributes.getValue("ID_REFLST")==null))) {
+            rl = new ReferenceList();
             rl.setFirstReferenceId(Integer.parseInt(attributes.getValue("ID_REF")));
+
+            rl.setId(Integer.parseInt(attributes.getValue("ID_REFLST")));
+            if(!referenceLists.contains(rl))
             referenceLists.add(rl);
         }
         if (isTable) {

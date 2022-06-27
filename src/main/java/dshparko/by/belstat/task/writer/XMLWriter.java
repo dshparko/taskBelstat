@@ -91,20 +91,28 @@ public class XMLWriter {
 
 
         writer.writeStartElement("ROW_REPORT");
-        writer.writeAttribute("ID_REF", "Брокар А.Л.");//CHANGE!
-        writer.writeAttribute("ID_REFLST", "бухгалтерия");//CHANGE!
-        writer.writeAttribute("ID_ROWRPT", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
-        writer.writeAttribute("ID_DTABLE", "zaitseva@yurkas.by");//CHANGE!
-        writer.writeAttribute("NUMBER_ROW", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
-        writer.writeAttribute("ID_DROW", "zaitseva@yurkas.by");//CHANGE!
-        writer.writeAttribute("TYPE_ROW", "zaitseva@yurkas.by");//CHANGE!
+        for(int i =0; i <template.getReferenceLists().size();i++) {
+            writer.writeStartElement("row");
+
+            writer.writeAttribute("ID_REF", String.valueOf(template.getReferenceLists().get(i).getFirstReferenceId()));
+
+            writer.writeAttribute("ID_REFLST",  String.valueOf(template.getReferenceLists().get(i).getId()));
+            writer.writeAttribute("ID_ROWRPT", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
+            writer.writeAttribute("ID_DTABLE", "zaitseva@yurkas.by");//CHANGE!
+            writer.writeAttribute("NUMBER_ROW", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
+            writer.writeAttribute("ID_DROW", "zaitseva@yurkas.by");//CHANGE!
+            writer.writeAttribute("TYPE_ROW", "zaitseva@yurkas.by");//CHANGE!
+            writer.writeEndElement();
+        }
         writer.writeEndElement();
 
         writer.writeStartElement("GRAPH_CELL");
+        writer.writeStartElement("row");
         writer.writeAttribute("ID_ROWRPT", "146");//CHANGE!
         writer.writeAttribute("ID_DGP", "83245");//CHANGE!
         writer.writeAttribute("ID_UOM", "163");//CHANGE!
         writer.writeAttribute("VALUE_GCELL", "1");//CHANGE!
+        writer.writeEndElement();
         writer.writeEndElement();
 
         writer.writeEndElement();
