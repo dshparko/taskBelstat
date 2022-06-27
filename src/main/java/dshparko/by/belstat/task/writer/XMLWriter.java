@@ -1,5 +1,8 @@
 package dshparko.by.belstat.task.writer;
 
+import dshparko.by.belstat.task.reader.csv.CSVFile;
+import dshparko.by.belstat.task.reader.xml.models.Template;
+
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -13,13 +16,16 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class XMLWriter {
-    public static Random random = new Random();
+    public  Random random = new Random();
 
-    public static void main(String[] args) {
+    private Template template;
+    public void writeXml(ArrayList<CSVFile> csvFiles, Template template) {
 
+        this.template = template;
         try {
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -43,7 +49,7 @@ public class XMLWriter {
     }
 
 
-    private static void writeXml(OutputStream out) throws XMLStreamException {
+    private  void writeXml(OutputStream out) throws XMLStreamException {
 
         XMLOutputFactory output = XMLOutputFactory.newInstance();
 
@@ -58,11 +64,13 @@ public class XMLWriter {
         writer.writeStartElement("DESCRIPTION");
 
         writer.writeAttribute("APP_VER", "22.1.4.14.ARM");
-        writer.writeAttribute("DB_VER", "5");
+
+        writer.writeAttribute("DB_VER", "3");
+        writer.writeAttribute("FT_VER", String.valueOf(template.getDescription().getVersionNumber()));
 
         writer.writeAttribute("COMMENT", String.valueOf(random.nextInt(50000)));
-        writer.writeAttribute("ID_REF", "CHANGE");//CHANGE!
-        writer.writeAttribute("ID_FT", "20214");//CHANGE!
+        writer.writeAttribute("ID_REF", "-1");
+        writer.writeAttribute("ID_FT", String.valueOf(template.getDescription().getTemplateId()));
         writer.writeAttribute("ID_P", "12639");//CHANGE!
         writer.writeAttribute("NAME_ESN", "");
 
@@ -83,17 +91,20 @@ public class XMLWriter {
 
 
         writer.writeStartElement("ROW_REPORT");
-        writer.writeAttribute("NAME", "Брокар А.Л.");//CHANGE!
-        writer.writeAttribute("DEPARTMENT", "бухгалтерия");//CHANGE!
-        writer.writeAttribute("PHONE", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
-        writer.writeAttribute("EMAIL", "zaitseva@yurkas.by");//CHANGE!
+        writer.writeAttribute("ID_REF", "Брокар А.Л.");//CHANGE!
+        writer.writeAttribute("ID_REFLST", "бухгалтерия");//CHANGE!
+        writer.writeAttribute("ID_ROWRPT", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
+        writer.writeAttribute("ID_DTABLE", "zaitseva@yurkas.by");//CHANGE!
+        writer.writeAttribute("NUMBER_ROW", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
+        writer.writeAttribute("ID_DROW", "zaitseva@yurkas.by");//CHANGE!
+        writer.writeAttribute("TYPE_ROW", "zaitseva@yurkas.by");//CHANGE!
         writer.writeEndElement();
 
         writer.writeStartElement("GRAPH_CELL");
-        writer.writeAttribute("NAME", "Брокар А.Л.");//CHANGE!
-        writer.writeAttribute("DEPARTMENT", "бухгалтерия");//CHANGE!
-        writer.writeAttribute("PHONE", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
-        writer.writeAttribute("EMAIL", "zaitseva@yurkas.by");//CHANGE!
+        writer.writeAttribute("ID_ROWRPT", "146");//CHANGE!
+        writer.writeAttribute("ID_DGP", "83245");//CHANGE!
+        writer.writeAttribute("ID_UOM", "163");//CHANGE!
+        writer.writeAttribute("VALUE_GCELL", "1");//CHANGE!
         writer.writeEndElement();
 
         writer.writeEndElement();
@@ -148,7 +159,7 @@ public class XMLWriter {
 */
     }
 
-    private static String formatXML(String xml) throws TransformerException {
+    private  String formatXML(String xml) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
 

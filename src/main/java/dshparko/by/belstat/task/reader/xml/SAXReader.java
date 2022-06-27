@@ -25,6 +25,7 @@ public class SAXReader extends DefaultHandler {
     TemplateGraph g;
     TemplateRow r;
 
+    ReferenceList rl ;
 
     TemplateDescription description;
 
@@ -33,6 +34,7 @@ public class SAXReader extends DefaultHandler {
     ArrayList<TemplateRow> rows;
     ArrayList<TemplateGraph> graphListWrapper;
     ArrayList<TemplatePart> parts;
+    ArrayList<ReferenceList> referenceLists;
 
     private Template template;
 
@@ -46,6 +48,8 @@ public class SAXReader extends DefaultHandler {
 
     @Override
     public void startDocument() {
+
+        rl = new ReferenceList();
         periodType = new PeriodType();
         period = new Period();
         periods = new ArrayList<>();
@@ -58,6 +62,7 @@ public class SAXReader extends DefaultHandler {
 
         templatePart = new TemplatePart();
 
+        referenceLists = new ArrayList<>();
         rows = new ArrayList<>();
         graphListWrapper = new ArrayList<>();
         parts = new ArrayList<>();
@@ -69,10 +74,11 @@ public class SAXReader extends DefaultHandler {
     @Override
     public void endDocument() {
 
-        for (int i = 0; i < table.size(); i++) {
-            System.out.println(table.get(i).getNumber());
+        for (TemplateTable templateTable : table) {
+            System.out.println(templateTable.getNumber());
         }
         periodType.setPeriods(periods);
+        template.setReferenceLists(referenceLists);
         template.setPeriodType(periodType);
         template.setDescription(description);
         template.setParts(parts);
@@ -104,8 +110,9 @@ public class SAXReader extends DefaultHandler {
             period.setId(Integer.parseInt(attributes.getValue("ID_P")));
             periods.add(period);
         }
-        if (qName.equals("row")) {
-            Integer.parseInt(attributes.getValue("ID_REF"));
+        if (qName.equals("row")&& !(attributes.getValue("ID_REF") ==null)) {
+            rl.setFirstReferenceId(Integer.parseInt(attributes.getValue("ID_REF")));
+            referenceLists.add(rl);
         }
         if (isTable) {
             if (qName.equals("row")) {
