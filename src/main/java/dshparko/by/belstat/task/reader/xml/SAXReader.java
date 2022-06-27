@@ -74,14 +74,14 @@ public class SAXReader extends DefaultHandler {
     @Override
     public void endDocument() {
 
-        for (TemplateTable templateTable : table) {
-            System.out.println(templateTable.getNumber());
-        }
+
         periodType.setPeriods(periods);
         template.setReferenceLists(referenceLists);
         template.setPeriodType(periodType);
         template.setDescription(description);
-        template.setParts(parts);
+        template.setParts(parts);for(int i =0; i< rows.size();i++){
+            System.out.println(template.getParts().get(0).getTables().get(0).getRows().get(i).getCode());
+        }
         System.out.println("End Document");
     }
 
@@ -110,35 +110,40 @@ public class SAXReader extends DefaultHandler {
             period.setId(Integer.parseInt(attributes.getValue("ID_P")));
             periods.add(period);
         }
-        if (qName.equals("row")&& (!(attributes.getValue("ID_REF") ==null)&&!(attributes.getValue("ID_REFLST")==null))) {
+        if (qName.equals("row")&& ((!(attributes.getValue("ID_REF") ==null)&&!(attributes.getValue("ID_REFLST")==null))||!(attributes.getValue("VALUE_FREE_ROW")==null))) {
             rl = new ReferenceList();
             rl.setFirstReferenceId(Integer.parseInt(attributes.getValue("ID_REF")));
+
 
             rl.setId(Integer.parseInt(attributes.getValue("ID_REFLST")));
             if(!referenceLists.contains(rl))
             referenceLists.add(rl);
         }
+
         if (isTable) {
             if (qName.equals("row")) {
                 if (!isGraph && !isRows && !isCell) {
                     t = new TemplateTable();
+
                     t.setId(Integer.parseInt(attributes.getValue("ID_DTABLE")));
                     t.setNumber(Integer.parseInt(attributes.getValue("NUMBER_DTABLE")));
                     t.setName(attributes.getValue("NAME_DPART"));
-
-                } else if (isGraph) {
+                    if((!(attributes.getValue("ID_UOM") ==null)))
+                    t.setUnitOfMeasure(Integer.parseInt(attributes.getValue("ID_UOM")));
+                }if (isGraph) {
                     g = new TemplateGraph();
                     g.setId(Integer.parseInt(attributes.getValue("ID_DGP")));
                     g.setNumber(Integer.parseInt(attributes.getValue("ID_DGP")));
 
-                } else if (isRows) {
+                }if (isRows) {
                     r = new TemplateRow();
                     r.setId(Integer.parseInt(attributes.getValue("ID_DROW")));
-                    r.setCode((attributes.getValue("CODE_DROW")));
+                    r.setCode(Integer.parseInt(attributes.getValue("CODE_DROW")));
+                    System.out.println((attributes.getValue("CODE_DROW")));
 
                 }
 
-
+                if (!rows.contains(r))
                 rows.add(r);
                 graphListWrapper.add(g);
 

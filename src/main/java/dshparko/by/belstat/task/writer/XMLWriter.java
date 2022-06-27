@@ -20,11 +20,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class XMLWriter {
-    public  Random random = new Random();
-
+    public Random random = new Random();
+    ArrayList<CSVFile> csvFiles;
     private Template template;
-    public void writeXml(ArrayList<CSVFile> csvFiles, Template template) {
 
+    public void writeXml(ArrayList<CSVFile> csvFiles, Template template) {
+        this.csvFiles = csvFiles;
         this.template = template;
         try {
 
@@ -37,7 +38,7 @@ public class XMLWriter {
 
             String prettyPrintXML = formatXML(xml);
 
-            System.out.println(prettyPrintXML);
+         //   System.out.println(prettyPrintXML);
 
             Files.writeString(Paths.get("C:\\Users\\Lenovo\\OneDrive - bsuir.by\\Рабочий стол\\task\\src\\main\\java\\dshparko\\by\\belstat\\task\\writer\\test.xml"),
                     prettyPrintXML, StandardCharsets.UTF_8);
@@ -49,7 +50,7 @@ public class XMLWriter {
     }
 
 
-    private  void writeXml(OutputStream out) throws XMLStreamException {
+    private void writeXml(OutputStream out) throws XMLStreamException {
 
         XMLOutputFactory output = XMLOutputFactory.newInstance();
 
@@ -82,23 +83,24 @@ public class XMLWriter {
         writer.writeEndElement();
 
 
-
-
-
         //   writer.writeComment("");
 
         writer.writeEndElement();
 
 
         writer.writeStartElement("ROW_REPORT");
-        for(int i =0; i <template.getReferenceLists().size();i++) {
+        for (int i = 0; i < template.getReferenceLists().size(); i++) {
             writer.writeStartElement("row");
 
             writer.writeAttribute("ID_REF", String.valueOf(template.getReferenceLists().get(i).getFirstReferenceId()));
 
-            writer.writeAttribute("ID_REFLST",  String.valueOf(template.getReferenceLists().get(i).getId()));
+            writer.writeAttribute("ID_REFLST", String.valueOf(template.getReferenceLists().get(i).getId()));
+
+            writer.writeAttribute("ID_UOM", String.valueOf(template.getParts().get(0).getTables().get(0).getUnitOfMeasure()));
+            writer.writeAttribute("VALUE_FREE_ROW", csvFiles.get(0).getFourthCell());
+            //if (csvFiles.get(0).getFourthCell())
             writer.writeAttribute("ID_ROWRPT", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
-            writer.writeAttribute("ID_DTABLE", "zaitseva@yurkas.by");//CHANGE!
+            writer.writeAttribute("ID_DTABLE", String.valueOf(template.getParts().get(0).getTables().get(0).getId()));
             writer.writeAttribute("NUMBER_ROW", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
             writer.writeAttribute("ID_DROW", "zaitseva@yurkas.by");//CHANGE!
             writer.writeAttribute("TYPE_ROW", "zaitseva@yurkas.by");//CHANGE!
@@ -167,7 +169,7 @@ public class XMLWriter {
 */
     }
 
-    private  String formatXML(String xml) throws TransformerException {
+    private String formatXML(String xml) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
 

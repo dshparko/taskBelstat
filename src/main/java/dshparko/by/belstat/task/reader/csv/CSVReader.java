@@ -37,7 +37,7 @@ public class CSVReader implements Reader {
             bufferedReader = new BufferedReader(fileReader);
             while ((str = bufferedReader.readLine()) != null) {
                 CSVLine = initialize(str);
-                if (CSVLine != null)
+                if (CSVLine != null && !CSVList.contains(CSVLine))
                     CSVList.add(CSVLine);
             }
             fileReader.close();

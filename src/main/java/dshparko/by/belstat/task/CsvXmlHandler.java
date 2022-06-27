@@ -9,17 +9,21 @@ import java.util.ArrayList;
 public class CsvXmlHandler {
 
 
-    public void excludeLines(ArrayList<CSVFile> csvFiles, Template template){
-        int size = template.getParts().size();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < template.getParts().get(i).getTables().size(); j++) {
-                for (int k = 0; k < csvFiles.size(); k++) {
+    public void excludeLines(ArrayList<CSVFile> csvFiles, Template template) {
+        for (int k = 0; k < csvFiles.size(); k++) {
+            for (int j = 0; j < template.getParts().get(0).getTables().size(); j++) {
 
-                    //     System.out.println(template.getParts().get(i).getTables().get(j).getNumber()+"     "+Integer.parseInt(csvFiles.get(k).getTableNumber()));
-                    if (Integer.parseInt(csvFiles.get(k).getTableNumber())==(template.getParts().get(i).getTables().get(j).getNumber())) {
-                        System.out.println("True");
-                        //     System.out.println(template.getParts().get(i).getTables().get(j).getNumber()+"     "+Integer.parseInt(csvFiles.get(k).getTableNumber()));
-                    }
+                if (Integer.parseInt(csvFiles.get(k).getGraphNumber()) == (template.getParts().get(0).getTables().get(j).getGraphs().get(j).getNumber())) {
+                    System.out.println("True");
+                }
+                if (Integer.parseInt(csvFiles.get(k).getLineCode()) == (template.getParts().get(0).getTables().get(j).getRows().get(j).getCode())) {
+                    System.out.println("True");
+                }
+                if (Integer.parseInt(csvFiles.get(k).getTableNumber()) == (template.getParts().get(0).getTables().get(j).getNumber())) {
+                    System.out.println("True");
+                }
+               if(!(csvFiles.get(k).getFourthCell()==null)){
+                    System.out.println("True");
                 }
             }
         }

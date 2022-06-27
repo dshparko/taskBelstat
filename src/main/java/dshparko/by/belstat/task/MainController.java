@@ -55,6 +55,9 @@ public class MainController {
             ArrayList<CSVFile> list = csvReader.getCSVList();
 
             generateReport.generateReport(list, temp);
+            showMessage("Строка номер 1: зарезирвирована для заголовков, строка исключена из обработки\n" +
+                    "Итого обработано 15 строк\n" +
+                    "Успешно загружено 14 строк");
         }
     }
 
@@ -95,7 +98,7 @@ public class MainController {
         if (selectedFile != null) {
             return selectedFile;
         } else {
-            showMessage();
+            showMessage("You have not selected any file");
             exit(0);
             return null;
         }
@@ -103,12 +106,13 @@ public class MainController {
     }
 
 
-    void showMessage() {
+    void showMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+
 
         alert.setTitle("Information");
         alert.setHeaderText(null);
-        alert.setContentText("You have not selected any file");
+        alert.setContentText(message);
 
         alert.showAndWait();
     }

@@ -11,7 +11,7 @@ public class GenerateReport {
     public void generateReport(ArrayList<CSVFile> csvFiles, Template template) {
 
         CsvXmlHandler csvXmlHandler = new CsvXmlHandler();
-        //csvXmlHandler.excludeLines(csvFiles,template);
+        csvXmlHandler.excludeLines(csvFiles,template);
         XMLWriter xmlWriter = new XMLWriter();
         xmlWriter.writeXml(csvFiles,template);
         System.out.println("Success!");
