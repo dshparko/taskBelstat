@@ -72,14 +72,14 @@ public class XMLWriter {
         writer.writeAttribute("COMMENT", String.valueOf(random.nextInt(50000)));
         writer.writeAttribute("ID_REF", "-1");
         writer.writeAttribute("ID_FT", String.valueOf(template.getDescription().getTemplateId()));
-        writer.writeAttribute("ID_P", "12639");//CHANGE!
+        writer.writeAttribute("ID_P",  String.valueOf(template.getPeriodType().getPeriods().get(0).getId()));
         writer.writeAttribute("NAME_ESN", "");
 
         writer.writeStartElement("USERS");
-        writer.writeAttribute("NAME", "Брокар А.Л.");//CHANGE!
-        writer.writeAttribute("DEPARTMENT", "бухгалтерия");//CHANGE!
-        writer.writeAttribute("PHONE", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
-        writer.writeAttribute("EMAIL", "zaitseva@yurkas.by");//CHANGE!
+        writer.writeAttribute("NAME", "Брокар А.Л.");
+        writer.writeAttribute("DEPARTMENT", "бухгалтерия");
+        writer.writeAttribute("PHONE", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");
+        writer.writeAttribute("EMAIL", "zaitseva@yurkas.by");
         writer.writeEndElement();
 
 

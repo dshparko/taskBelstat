@@ -79,9 +79,7 @@ public class SAXReader extends DefaultHandler {
         template.setReferenceLists(referenceLists);
         template.setPeriodType(periodType);
         template.setDescription(description);
-        template.setParts(parts);for(int i =0; i< rows.size();i++){
-            System.out.println(template.getParts().get(0).getTables().get(0).getRows().get(i).getCode());
-        }
+        template.setParts(parts);
         System.out.println("End Document");
     }
 
@@ -107,7 +105,9 @@ public class SAXReader extends DefaultHandler {
         }
 
         if (qName.equals("PERIOD")) {
+            period = new Period();
             period.setId(Integer.parseInt(attributes.getValue("ID_P")));
+
             periods.add(period);
         }
         if (qName.equals("row")&& ((!(attributes.getValue("ID_REF") ==null)&&!(attributes.getValue("ID_REFLST")==null))||!(attributes.getValue("VALUE_FREE_ROW")==null))) {
@@ -139,12 +139,12 @@ public class SAXReader extends DefaultHandler {
                     r = new TemplateRow();
                     r.setId(Integer.parseInt(attributes.getValue("ID_DROW")));
                     r.setCode(Integer.parseInt(attributes.getValue("CODE_DROW")));
-                    System.out.println((attributes.getValue("CODE_DROW")));
 
                 }
 
                 if (!rows.contains(r))
                 rows.add(r);
+                if (!graphListWrapper.contains(g))
                 graphListWrapper.add(g);
 
                 t.setRows(rows);
