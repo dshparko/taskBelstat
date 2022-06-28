@@ -20,22 +20,24 @@ public class SAXReader extends DefaultHandler {
     private boolean isCell = false;
 
     private ArrayList<TemplateTable> table;
-
+    private ArrayList<UnitOfMeasure> uom;
     TemplateTable t;
     TemplateGraph g;
     TemplateRow r;
+    UnitOfMeasure unitOfMeasure;
 
-    ReferenceList rl ;
+
+    ReferenceList rl;
 
     TemplateDescription description;
-
+    UnitOfMeasureReference unitOfMeasureReference;
     TemplatePart templatePart;
     ArrayList<Period> periods;
     ArrayList<TemplateRow> rows;
     ArrayList<TemplateGraph> graphListWrapper;
     ArrayList<TemplatePart> parts;
     ArrayList<ReferenceList> referenceLists;
-
+    ArrayList<UnitOfMeasureReference> unitOfMeasureReferences;
     private Template template;
 
     Period period;
@@ -48,7 +50,9 @@ public class SAXReader extends DefaultHandler {
 
     @Override
     public void startDocument() {
-
+        unitOfMeasureReference = new UnitOfMeasureReference();
+        unitOfMeasureReferences = new ArrayList<>();
+        unitOfMeasure = new UnitOfMeasure();
         rl = new ReferenceList();
         periodType = new PeriodType();
         period = new Period();
@@ -66,6 +70,7 @@ public class SAXReader extends DefaultHandler {
         rows = new ArrayList<>();
         graphListWrapper = new ArrayList<>();
         parts = new ArrayList<>();
+        uom = new ArrayList<>();
 
         template = new Template();
         System.out.println("Start Document");
@@ -76,10 +81,14 @@ public class SAXReader extends DefaultHandler {
 
 
         periodType.setPeriods(periods);
+        template.setUnitsOfMeasure(uom);
         template.setReferenceLists(referenceLists);
         template.setPeriodType(periodType);
         template.setDescription(description);
         template.setParts(parts);
+     //   for (int i = 0; i < template.getUnitsOfMeasure().size(); i++) {
+     //       System.out.println(String.valueOf(template.getUnitsOfMeasure().get(i).getId()));
+     //   }
         System.out.println("End Document");
     }
 
@@ -110,17 +119,25 @@ public class SAXReader extends DefaultHandler {
 
             periods.add(period);
         }
-        if (qName.equals("row")&& ((!(attributes.getValue("ID_REF") ==null)&&!(attributes.getValue("ID_REFLST")==null))||!(attributes.getValue("VALUE_FREE_ROW")==null))) {
-            rl = new ReferenceList();
-            rl.setFirstReferenceId(Integer.parseInt(attributes.getValue("ID_REF")));
 
-
-            rl.setId(Integer.parseInt(attributes.getValue("ID_REFLST")));
-            if(!referenceLists.contains(rl))
-            referenceLists.add(rl);
-        }
 
         if (isTable) {
+            if (isRows) {
+                if (qName.equals("row")) {
+                    rl = new ReferenceList();
+                    unitOfMeasureReference = new UnitOfMeasureReference();
+                    if ((attributes.getValue("ID_UOM")) != null)
+                        unitOfMeasureReference.setUnitOfMeasureId(Integer.parseInt(attributes.getValue("ID_UOM")));
+                  //  rl.setFirstReferenceId(Integer.parseInt(attributes.getValue("ID_REF")));
+
+                    rl.setUnitsOfMeasureReferences(unitOfMeasureReferences);
+                    if ((attributes.getValue("ID_REFLST")) != null)
+                        rl.setId(Integer.parseInt(attributes.getValue("ID_REFLST")));
+System.out.println((attributes.getValue("ID_UOM"))+"   "+attributes.getValue("ID_REF")+"  "+attributes.getValue("ID_REFLST"));
+
+                    referenceLists.add(rl);
+                }
+            }
             if (qName.equals("row")) {
                 if (!isGraph && !isRows && !isCell) {
                     t = new TemplateTable();
@@ -128,30 +145,41 @@ public class SAXReader extends DefaultHandler {
                     t.setId(Integer.parseInt(attributes.getValue("ID_DTABLE")));
                     t.setNumber(Integer.parseInt(attributes.getValue("NUMBER_DTABLE")));
                     t.setName(attributes.getValue("NAME_DPART"));
-                    if((!(attributes.getValue("ID_UOM") ==null)))
-                    t.setUnitOfMeasure(Integer.parseInt(attributes.getValue("ID_UOM")));
-                }if (isGraph) {
+                }
+                if (isGraph) {
                     g = new TemplateGraph();
                     g.setId(Integer.parseInt(attributes.getValue("ID_DGP")));
-                    g.setNumber(Integer.parseInt(attributes.getValue("ID_DGP")));
+                    g.setNumber(Integer.parseInt(attributes.getValue("NUMBER_DGP")));
 
-                }if (isRows) {
+                    if (!graphListWrapper.contains(g))
+                        graphListWrapper.add(g);
+                }
+                if ((!(attributes.getValue("ID_UOM") == null))) {
+                    unitOfMeasure = new UnitOfMeasure();
+                    unitOfMeasure.setId(Integer.parseInt(attributes.getValue("ID_UOM")));
+                    uom.add(unitOfMeasure);
+                    //    System.out.println(attributes.getValue("ID_UOM"));
+                }
+                if (isRows && attributes.getValue("TYPE_ROW") != null) {
                     r = new TemplateRow();
                     r.setId(Integer.parseInt(attributes.getValue("ID_DROW")));
                     r.setCode(Integer.parseInt(attributes.getValue("CODE_DROW")));
+                    if ((attributes.getValue("ID_REF")) != null)
+                        unitOfMeasureReference.setStringBlockReferenceId(Integer.parseInt(attributes.getValue("ID_REF")));
 
+                    r.setType(Integer.parseInt(attributes.getValue("TYPE_ROW")));
+                    //System.out.println(attributes.getValue("ID_DROW"));
+                  //  if (!rows.contains(r))
+                        rows.add(r);
+                    t.setRows(rows);
+                    t.setGraphs(graphListWrapper);
+                        table.add(t);
                 }
 
-                if (!rows.contains(r))
-                rows.add(r);
-                if (!graphListWrapper.contains(g))
-                graphListWrapper.add(g);
 
-                t.setRows(rows);
-                t.setGraphs(graphListWrapper);
 
-                if (!table.contains(t))
-                    table.add(t);
+
+
 
 
                 templatePart.setTables(table);

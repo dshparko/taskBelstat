@@ -38,7 +38,7 @@ public class XMLWriter {
 
             String prettyPrintXML = formatXML(xml);
 
-         //   System.out.println(prettyPrintXML);
+               System.out.println(prettyPrintXML);
 
             Files.writeString(Paths.get("C:\\Users\\Lenovo\\OneDrive - bsuir.by\\Рабочий стол\\task\\src\\main\\java\\dshparko\\by\\belstat\\task\\writer\\test.xml"),
                     prettyPrintXML, StandardCharsets.UTF_8);
@@ -63,16 +63,13 @@ public class XMLWriter {
         writer.writeStartElement("REPORT");
 
         writer.writeStartElement("DESCRIPTION");
-
         writer.writeAttribute("APP_VER", "22.1.4.14.ARM");
-
         writer.writeAttribute("DB_VER", "3");
         writer.writeAttribute("FT_VER", String.valueOf(template.getDescription().getVersionNumber()));
-
         writer.writeAttribute("COMMENT", String.valueOf(random.nextInt(50000)));
         writer.writeAttribute("ID_REF", "-1");
         writer.writeAttribute("ID_FT", String.valueOf(template.getDescription().getTemplateId()));
-        writer.writeAttribute("ID_P",  String.valueOf(template.getPeriodType().getPeriods().get(0).getId()));
+        writer.writeAttribute("ID_P", String.valueOf(template.getPeriodType().getPeriods().get(0).getId()));
         writer.writeAttribute("NAME_ESN", "");
 
         writer.writeStartElement("USERS");
@@ -82,38 +79,40 @@ public class XMLWriter {
         writer.writeAttribute("EMAIL", "zaitseva@yurkas.by");
         writer.writeEndElement();
 
-
-        //   writer.writeComment("");
-
         writer.writeEndElement();
 
 
         writer.writeStartElement("ROW_REPORT");
+
         for (int i = 0; i < template.getReferenceLists().size(); i++) {
             writer.writeStartElement("row");
+//if(template.getParts().get(0).getTables().get(0).getRows().get(i).getId()!=0)
+            writer.writeAttribute("ID_REF", String.valueOf(template.getParts().get(0).getTables().get(0).getRows().get(i).getId()));
 
-            writer.writeAttribute("ID_REF", String.valueOf(template.getReferenceLists().get(i).getFirstReferenceId()));
-
-            writer.writeAttribute("ID_REFLST", String.valueOf(template.getReferenceLists().get(i).getId()));
-
-            writer.writeAttribute("ID_UOM", String.valueOf(template.getParts().get(0).getTables().get(0).getUnitOfMeasure()));
+            writer.writeAttribute("ID_REFLST", String.valueOf(template.getReferenceLists().get(0).getId()));
+            if (i < 19)
+                writer.writeAttribute("ID_UOM", String.valueOf(template.getUnitsOfMeasure().get(i).getId()));
             writer.writeAttribute("VALUE_FREE_ROW", csvFiles.get(0).getFourthCell());
             //if (csvFiles.get(0).getFourthCell())
-            writer.writeAttribute("ID_ROWRPT", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
-            writer.writeAttribute("ID_DTABLE", String.valueOf(template.getParts().get(0).getTables().get(0).getId()));
-            writer.writeAttribute("NUMBER_ROW", "8 029 113-17-89; 8 017 511-99-55 (вн.1163)");//CHANGE!
-            writer.writeAttribute("ID_DROW", "zaitseva@yurkas.by");//CHANGE!
-            writer.writeAttribute("TYPE_ROW", "zaitseva@yurkas.by");//CHANGE!
+
+            writer.writeAttribute("ID_ROWRPT", "147");//CHANGE!
+            if (i < template.getParts().get(i).getTables().size())
+                writer.writeAttribute("ID_DTABLE", String.valueOf(template.getParts().get(i).getTables().get(i).getId()));
+            writer.writeAttribute("NUMBER_ROW", String.valueOf(template.getParts().get(0).getTables().get(0).getGraphs().get(0).getNumber()));
+            if (i < template.getParts().get(0).getTables().get(0).getRows().size())
+                writer.writeAttribute("ID_DROW", String.valueOf(template.getParts().get(0).getTables().get(0).getRows().get(i).getId()));
+            writer.writeAttribute("TYPE_ROW", String.valueOf(template.getParts().get(0).getTables().get(0).getRows().get(i).getType()));
             writer.writeEndElement();
         }
+
         writer.writeEndElement();
 
         writer.writeStartElement("GRAPH_CELL");
         writer.writeStartElement("row");
         writer.writeAttribute("ID_ROWRPT", "146");//CHANGE!
-        writer.writeAttribute("ID_DGP", "83245");//CHANGE!
-        writer.writeAttribute("ID_UOM", "163");//CHANGE!
-        writer.writeAttribute("VALUE_GCELL", "1");//CHANGE!
+        writer.writeAttribute("ID_DGP", String.valueOf(template.getParts().get(0).getTables().get(0).getGraphs().get(0).getId()));
+        writer.writeAttribute("ID_UOM", String.valueOf(template.getUnitsOfMeasure().get(1).getId()));
+        writer.writeAttribute("VALUE_GCELL", csvFiles.get(0).getValue());
         writer.writeEndElement();
         writer.writeEndElement();
 
@@ -124,49 +123,6 @@ public class XMLWriter {
         writer.flush();
 
         writer.close();
-      /*  writer.writeStartElement("name");
-        writer.writeCharacters("mkyong");
-        writer.writeEndElement();
-
-        writer.writeStartElement("salary");
-        writer.writeAttribute("currency", "USD");
-        writer.writeCharacters("5000");
-        writer.writeEndElement();
-
-        writer.writeStartElement("bio");
-        writer.writeCData("HTML tag <code>testing</code>");
-        writer.writeEndElement();
-
-        writer.writeEndElement();
-        // </staff>
-
-        // <staff>
-        writer.writeStartElement("staff");
-        writer.writeAttribute("id", "1002");
-
-        writer.writeStartElement("name");
-        writer.writeCharacters("yflow");
-        writer.writeEndElement();
-
-        writer.writeStartElement("salary");
-        writer.writeAttribute("currency", "EUR");
-        writer.writeCharacters("8000");
-        writer.writeEndElement();
-
-        writer.writeStartElement("bio");
-        writer.writeCData("a & b");
-        writer.writeEndElement();
-
-        writer.writeEndElement();
-
-
-        writer.writeEndDocument();
-
-
-        writer.flush();
-
-        writer.close();
-*/
     }
 
     private String formatXML(String xml) throws TransformerException {
