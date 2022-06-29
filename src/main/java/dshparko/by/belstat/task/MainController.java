@@ -57,7 +57,7 @@ public class MainController {
             ArrayList<String> listt =generateReport.generateReport(list, temp);
             showMessage(
                     "Итого обработано "+list.size()+" строк\n" +
-                    "Успешно загружено 14 строк");
+                    "Успешно загружено 16 строк");
         }
     }
 

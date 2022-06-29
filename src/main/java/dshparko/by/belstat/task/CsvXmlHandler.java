@@ -7,18 +7,19 @@ import dshparko.by.belstat.task.reader.xml.models.Template;
 import java.util.ArrayList;
 
 public class CsvXmlHandler {
-    ArrayList<String> report = new ArrayList<>();
 
-    public ArrayList<String> excludeLines(ArrayList<CSVFile> csvFiles, Template template) {
-        checkLineCode(csvFiles,template);
-        checkTables(csvFiles,template);
-        checkGraphs(csvFiles,template);
-        checkValue(csvFiles,template);
-        return report;
+    public ArrayList<CSVFile> excludeLines(ArrayList<CSVFile> csvFiles, Template template) {
+        ArrayList<String> report = new ArrayList<>();
+        csvFiles = checkLineCode(csvFiles, template);
+        csvFiles = checkTables(csvFiles, template);
+        csvFiles = checkGraphs(csvFiles, template);
+        csvFiles = checkValue(csvFiles, template);
+        return csvFiles;
     }
 
 
-    public ArrayList<String> checkGraphs(ArrayList<CSVFile> csvFiles, Template template) {
+    public ArrayList<CSVFile>  checkGraphs(ArrayList<CSVFile> csvFiles, Template template) {
+        ArrayList<String> report = new ArrayList<>();
         boolean isGraph;
         for (int k = 0; k < csvFiles.size(); k++) {
             isGraph = true;
@@ -30,16 +31,18 @@ public class CsvXmlHandler {
                 }
             }
             if (isGraph) {
-                report.add("Line number " + k + 1 + " graph with the specified number was not found");
-                System.out.println("Line number " + k + 1 + " graph with the specified number was not found");
+                csvFiles.remove(k);
+                report.add("Line number " + (k + 1) + " graph with the specified number was not found");
+                System.out.println("Line number " + (k + 1) + " graph with the specified number was not found");
             }
         }
 
-        return report;
+        return csvFiles;
     }
 
 
-    public ArrayList<String> checkTables(ArrayList<CSVFile> csvFiles, Template template) {
+    public ArrayList<CSVFile> checkTables(ArrayList<CSVFile> csvFiles, Template template) {
+        ArrayList<String> report = new ArrayList<>();
         boolean isGraph;
         for (int k = 0; k < csvFiles.size(); k++) {
             isGraph = true;
@@ -51,15 +54,17 @@ public class CsvXmlHandler {
                 }
             }
             if (isGraph) {
+                csvFiles.remove(k);
                 report.add("Line number " + k + 1 + " table with the specified number was not found");
                 System.out.println("Line number " + k + 1 + " table with the specified number was not found");
             }
         }
 
-        return report;
+        return csvFiles;
     }
 
-    public ArrayList<String> checkLineCode(ArrayList<CSVFile> csvFiles, Template template) {
+    public ArrayList<CSVFile> checkLineCode(ArrayList<CSVFile> csvFiles, Template template) {
+        ArrayList<String> report = new ArrayList<>();
         boolean isGraph;
         for (int k = 0; k < csvFiles.size(); k++) {
             isGraph = true;
@@ -72,22 +77,25 @@ public class CsvXmlHandler {
             }
             if (isGraph) {
                 report.add("Line number " + (k + 1) + " linecode with the specified number was not found");
+                csvFiles.remove(k);
                 System.out.println("Line number " + (k + 1) + " linecode with the specified number was not found");
             }
         }
 
-        return report;
+        return csvFiles;
     }
 
-    public ArrayList<String> checkValue(ArrayList<CSVFile> csvFiles, Template template) {
+    public ArrayList<CSVFile> checkValue(ArrayList<CSVFile> csvFiles, Template template) {
+        ArrayList<String> report = new ArrayList<>();
         for (int k = 0; k < csvFiles.size(); k++) {
             if (!(csvFiles.get(k).getValue()).matches("^[-+]?[0-9]*[.]?[0-9]+(?:[eE][-+]?[0-9]+)?$")) {
                 report.add("Line number " + (k + 1) + " value is not valid");
                 System.out.println("Line number " + (k + 1) + " value is not valid");
+                csvFiles.remove(k);
             }
 
         }
-        return report;
+        return csvFiles;
     }
 
 }

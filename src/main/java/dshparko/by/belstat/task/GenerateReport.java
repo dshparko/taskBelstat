@@ -9,9 +9,9 @@ import java.util.ArrayList;
 public class GenerateReport {
 
     public ArrayList<String> generateReport(ArrayList<CSVFile> csvFiles, Template template) {
-        ArrayList<String> newCsvFiles;
+        ArrayList<String> newCsvFiles = new ArrayList<>();
         CsvXmlHandler csvXmlHandler = new CsvXmlHandler();
-        newCsvFiles = csvXmlHandler.excludeLines(csvFiles,template);
+        csvFiles = csvXmlHandler.excludeLines(csvFiles,template);
      //   for(int i = 0;i<newCsvFiles.size();i++){
       //      System.out.println(newCsvFiles.get(i));
      //   }

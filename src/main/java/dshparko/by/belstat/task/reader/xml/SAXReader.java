@@ -122,7 +122,7 @@ public class SAXReader extends DefaultHandler {
 
 
         if (isTable) {
-            if (isRows) {
+           // if (isRows) {
                 if (qName.equals("row")) {
                     rl = new ReferenceList();
                     unitOfMeasureReference = new UnitOfMeasureReference();
@@ -133,8 +133,10 @@ public class SAXReader extends DefaultHandler {
                     rl.setUnitsOfMeasureReferences(unitOfMeasureReferences);
                     if ((attributes.getValue("ID_REFLST")) != null)
                         rl.setId(Integer.parseInt(attributes.getValue("ID_REFLST")));
+                    if ((attributes.getValue("ID_REF")) != null)
+                        rl.setFirstReferenceId(Integer.parseInt(attributes.getValue("ID_REF")));
                     referenceLists.add(rl);
-                }
+               // }
             }
             if (qName.equals("row")) {
                 if (!isGraph && !isRows && !isCell) {
