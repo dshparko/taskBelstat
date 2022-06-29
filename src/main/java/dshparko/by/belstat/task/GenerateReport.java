@@ -8,11 +8,15 @@ import java.util.ArrayList;
 
 public class GenerateReport {
 
-    public void generateReport(ArrayList<CSVFile> csvFiles, Template template) {
-
+    public ArrayList<String> generateReport(ArrayList<CSVFile> csvFiles, Template template) {
+        ArrayList<String> newCsvFiles;
         CsvXmlHandler csvXmlHandler = new CsvXmlHandler();
-       // csvXmlHandler.excludeLines(csvFiles,template);
+        newCsvFiles = csvXmlHandler.excludeLines(csvFiles,template);
+     //   for(int i = 0;i<newCsvFiles.size();i++){
+      //      System.out.println(newCsvFiles.get(i));
+     //   }
         XMLWriter xmlWriter = new XMLWriter();
         xmlWriter.writeXml(csvFiles,template);
+        return newCsvFiles;
     }
 }

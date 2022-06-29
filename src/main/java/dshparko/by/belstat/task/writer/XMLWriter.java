@@ -38,7 +38,7 @@ public class XMLWriter {
 
             String prettyPrintXML = formatXML(xml);
 
-               System.out.println(prettyPrintXML);
+       //     System.out.println(prettyPrintXML);
 
             Files.writeString(Paths.get("C:\\Users\\Lenovo\\OneDrive - bsuir.by\\Рабочий стол\\task\\src\\main\\java\\dshparko\\by\\belstat\\task\\writer\\test.xml"),
                     prettyPrintXML, StandardCharsets.UTF_8);
@@ -49,6 +49,7 @@ public class XMLWriter {
 
     }
 
+    int temp = 147;
 
     private void writeXml(OutputStream out) throws XMLStreamException {
 
@@ -88,14 +89,14 @@ public class XMLWriter {
             writer.writeStartElement("row");
 //if(template.getParts().get(0).getTables().get(0).getRows().get(i).getId()!=0)
             writer.writeAttribute("ID_REF", String.valueOf(template.getParts().get(0).getTables().get(0).getRows().get(i).getId()));
-
-            writer.writeAttribute("ID_REFLST", String.valueOf(template.getReferenceLists().get(0).getId()));
+            if (template.getReferenceLists().get(0).getId() != 0)
+                writer.writeAttribute("ID_REFLST", String.valueOf(template.getReferenceLists().get(0).getId()));
             if (i < 19)
                 writer.writeAttribute("ID_UOM", String.valueOf(template.getUnitsOfMeasure().get(i).getId()));
             writer.writeAttribute("VALUE_FREE_ROW", csvFiles.get(0).getFourthCell());
             //if (csvFiles.get(0).getFourthCell())
 
-            writer.writeAttribute("ID_ROWRPT", "147");//CHANGE!
+            writer.writeAttribute("ID_ROWRPT", String.valueOf(temp++));
             if (i < template.getParts().get(i).getTables().size())
                 writer.writeAttribute("ID_DTABLE", String.valueOf(template.getParts().get(i).getTables().get(i).getId()));
             writer.writeAttribute("NUMBER_ROW", String.valueOf(template.getParts().get(0).getTables().get(0).getGraphs().get(0).getNumber()));
@@ -108,12 +109,16 @@ public class XMLWriter {
         writer.writeEndElement();
 
         writer.writeStartElement("GRAPH_CELL");
-        writer.writeStartElement("row");
-        writer.writeAttribute("ID_ROWRPT", "146");//CHANGE!
-        writer.writeAttribute("ID_DGP", String.valueOf(template.getParts().get(0).getTables().get(0).getGraphs().get(0).getId()));
-        writer.writeAttribute("ID_UOM", String.valueOf(template.getUnitsOfMeasure().get(1).getId()));
-        writer.writeAttribute("VALUE_GCELL", csvFiles.get(0).getValue());
-        writer.writeEndElement();
+        for (int i = 0; i < csvFiles.size()&& i <template.getParts().get(0).getTables().get(0).getGraphs().size()&&template.getUnitsOfMeasure().size() > i; i++) {
+            writer.writeStartElement("row");
+            writer.writeAttribute("ID_ROWRPT", String.valueOf(temp++));
+          //  if (template.getParts().get(0).getTables().get(0).getGraphs().size() > i)
+            writer.writeAttribute("ID_DGP", String.valueOf(template.getParts().get(0).getTables().get(0).getGraphs().get(i).getId()));
+           // if (template.getUnitsOfMeasure().size() > i)
+                writer.writeAttribute("ID_UOM", String.valueOf(template.getUnitsOfMeasure().get(i).getId()));
+            writer.writeAttribute("VALUE_GCELL", csvFiles.get(i).getValue());
+            writer.writeEndElement();
+        }
         writer.writeEndElement();
 
         writer.writeEndElement();

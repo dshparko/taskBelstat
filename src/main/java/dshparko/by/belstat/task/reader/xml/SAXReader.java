@@ -73,7 +73,7 @@ public class SAXReader extends DefaultHandler {
         uom = new ArrayList<>();
 
         template = new Template();
-        System.out.println("Start Document");
+       // System.out.println("Start Document");
     }
 
     @Override
@@ -89,7 +89,7 @@ public class SAXReader extends DefaultHandler {
      //   for (int i = 0; i < template.getUnitsOfMeasure().size(); i++) {
      //       System.out.println(String.valueOf(template.getUnitsOfMeasure().get(i).getId()));
      //   }
-        System.out.println("End Document");
+       // System.out.println("End Document");
     }
 
 
@@ -133,8 +133,6 @@ public class SAXReader extends DefaultHandler {
                     rl.setUnitsOfMeasureReferences(unitOfMeasureReferences);
                     if ((attributes.getValue("ID_REFLST")) != null)
                         rl.setId(Integer.parseInt(attributes.getValue("ID_REFLST")));
-System.out.println((attributes.getValue("ID_UOM"))+"   "+attributes.getValue("ID_REF")+"  "+attributes.getValue("ID_REFLST"));
-
                     referenceLists.add(rl);
                 }
             }
@@ -148,6 +146,7 @@ System.out.println((attributes.getValue("ID_UOM"))+"   "+attributes.getValue("ID
                 }
                 if (isGraph) {
                     g = new TemplateGraph();
+
                     g.setId(Integer.parseInt(attributes.getValue("ID_DGP")));
                     g.setNumber(Integer.parseInt(attributes.getValue("NUMBER_DGP")));
 
@@ -201,20 +200,6 @@ System.out.println((attributes.getValue("ID_UOM"))+"   "+attributes.getValue("ID
             case ROW_IN_TABLE -> isRows = false;
             case DEATH_GRAPH_CELL -> isCell = false;
         }
-        //  for (TemplateTable templateTable : table) {System.out.println(templateTable.getNumber());
-        //System.out.println();}
-
-        // for (TemplateGraph templateGraph : graphListWrapper) System.out.println(templateGraph.getNumber());
-        // for (TemplateRow templateRow : rows) System.out.println(templateRow.getCode());
-        // for (TemplateTable templateTable : table) System.out.println(templateTable.getGraphs());
-/*
-      for (TemplateTable templateTable : table) {
-            ArrayList<TemplateRow> tt = templateTable.getRows();
-            System.out.println(tt.size());
-        }
-  */
-        //   System.out.printf("End Element : %s%n", qName);
-
 
     }
 

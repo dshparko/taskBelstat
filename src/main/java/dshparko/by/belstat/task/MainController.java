@@ -54,9 +54,9 @@ public class MainController {
 
             ArrayList<CSVFile> list = csvReader.getCSVList();
 
-            generateReport.generateReport(list, temp);
-            showMessage("Строка номер 1: зарезирвирована для заголовков, строка исключена из обработки\n" +
-                    "Итого обработано 15 строк\n" +
+            ArrayList<String> listt =generateReport.generateReport(list, temp);
+            showMessage(
+                    "Итого обработано "+list.size()+" строк\n" +
                     "Успешно загружено 14 строк");
         }
     }
